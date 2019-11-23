@@ -89,17 +89,15 @@ public class ImageGrid extends JPanel {
     }
 
     private void moveImage(@NotNull ImageChunk imageChunk) {
-        if (imageChunksArray[imageChunk.positionX][imageChunk.positionY + 1] == null) {
-            moveLeft(imageChunk);
-        } else if (imageChunksArray[imageChunk.positionX + 2][imageChunk.positionY + 1] == null) {
-            moveRight(imageChunk);
-        } else if (imageChunksArray[imageChunk.positionX + 1][imageChunk.positionY] == null) {
-            moveUp(imageChunk);
-        } else if (imageChunksArray[imageChunk.positionX + 1][imageChunk.positionY + 2] == null) {
-            moveDown(imageChunk);
-        } else {
-            return;
-        }
+        if (imageChunksArray[imageChunk.positionX][imageChunk.positionY + 1] == null)
+            moveByStep(true, -1, imageChunk);
+        else if (imageChunksArray[imageChunk.positionX + 2][imageChunk.positionY + 1] == null)
+            moveByStep(true, 1, imageChunk);
+        else if (imageChunksArray[imageChunk.positionX + 1][imageChunk.positionY] == null)
+            moveByStep(false, -1, imageChunk);
+        else if (imageChunksArray[imageChunk.positionX + 1][imageChunk.positionY + 2] == null)
+            moveByStep(false, 1, imageChunk);
+        else return;
         this.repaint();
     }
 
@@ -109,27 +107,10 @@ public class ImageGrid extends JPanel {
         graphics.drawImage(previewImage, 420, 0, null);
     }
 
-    private void moveLeft(@NotNull ImageChunk imageChunk) {
+    private void moveByStep(boolean moveHorizontally, int step, @NotNull ImageChunk imageChunk) {
         imageChunksArray[imageChunk.positionX + 1][imageChunk.positionY + 1] = null;
-        imageChunk.positionX--;
-        imageChunksArray[imageChunk.positionX + 1][imageChunk.positionY + 1] = imageChunk;
-    }
-
-    private void moveRight(@NotNull ImageChunk imageChunk) {
-        imageChunksArray[imageChunk.positionX + 1][imageChunk.positionY + 1] = null;
-        imageChunk.positionX++;
-        imageChunksArray[imageChunk.positionX + 1][imageChunk.positionY + 1] = imageChunk;
-    }
-
-    private void moveUp(@NotNull ImageChunk imageChunk) {
-        imageChunksArray[imageChunk.positionX + 1][imageChunk.positionY + 1] = null;
-        imageChunk.positionY--;
-        imageChunksArray[imageChunk.positionX + 1][imageChunk.positionY + 1] = imageChunk;
-    }
-
-    private void moveDown(@NotNull ImageChunk imageChunk) {
-        imageChunksArray[imageChunk.positionX + 1][imageChunk.positionY + 1] = null;
-        imageChunk.positionY++;
+        if (moveHorizontally) imageChunk.positionX += step;
+        else imageChunk.positionY += step;
         imageChunksArray[imageChunk.positionX + 1][imageChunk.positionY + 1] = imageChunk;
     }
 
