@@ -1,4 +1,4 @@
-import org.jetbrains.annotations.NotNull;
+package Game;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -34,16 +34,22 @@ public class ImageGrid extends JPanel {
 
     private boolean isDone(){
         for (ImageChunk[] imageChunks : imageChunksArray) {
-            for (ImageChunk imageChunk : imageChunks) {
-                if (imageChunk != null)
-                    if (!imageChunk.isInPosition())
-                        return false;
-            }
+            if (imageChunksRowIsNotDone(imageChunks))
+                return false;
         }
         return true;
     }
 
-    ImageGrid() {
+    private boolean imageChunksRowIsNotDone(ImageChunk[] imageChunks) {
+        for (ImageChunk imageChunk : imageChunks) {
+            if (imageChunk != null)
+                if (!imageChunk.isInPosition())
+                    return true;
+        }
+        return false;
+    }
+
+    public ImageGrid() {
         fillImageChunksArray();
         scrabble();
         addImageChunksToJPanel();
@@ -88,7 +94,7 @@ public class ImageGrid extends JPanel {
         imageChunksArray[1][1] = null;
     }
 
-    private void moveImage(@NotNull ImageChunk imageChunk) {
+    private void moveImage(ImageChunk imageChunk) {
         if (imageChunksArray[imageChunk.positionX][imageChunk.positionY + 1] == null)
             moveByStep(true, -1, imageChunk);
         else if (imageChunksArray[imageChunk.positionX + 2][imageChunk.positionY + 1] == null)
@@ -107,7 +113,7 @@ public class ImageGrid extends JPanel {
         graphics.drawImage(previewImage, 420, 0, null);
     }
 
-    private void moveByStep(boolean moveHorizontally, int step, @NotNull ImageChunk imageChunk) {
+    public void moveByStep(boolean moveHorizontally, int step, ImageChunk imageChunk) {
         imageChunksArray[imageChunk.positionX + 1][imageChunk.positionY + 1] = null;
         if (moveHorizontally) imageChunk.positionX += step;
         else imageChunk.positionY += step;

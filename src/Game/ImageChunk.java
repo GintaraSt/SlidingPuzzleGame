@@ -1,4 +1,4 @@
-import javafx.scene.image.Image;
+package Game;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -36,7 +36,7 @@ public class ImageChunk extends JPanel {
         });
     }
 
-    ImageChunk(int positionX, int positionY, int index, boolean isWall){
+    public ImageChunk(int positionX, int positionY, int index, boolean isWall){
         this(positionX, positionY, index, isWall, null);
     }
 
@@ -57,7 +57,7 @@ public class ImageChunk extends JPanel {
         }
     }
 
-    boolean isInPosition(){
+    public boolean isInPosition(){
         return (correctPositionY == positionY) && (correctPositionX == positionX);
     }
 

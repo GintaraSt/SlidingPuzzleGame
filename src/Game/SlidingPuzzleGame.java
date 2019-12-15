@@ -1,12 +1,13 @@
+package Game;
+
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class SlidingPuzzleGame extends JFrame {
     private static JFrame jFrame;
     private static ImageGrid imageGrid;
-    static String pathToImagesFolder = "./src/assets/";
+    static String pathToImagesFolder = "./src/Game/assets/";
 
     private static void startGame(){
         if (jFrame != null) {
